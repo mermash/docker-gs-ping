@@ -32,7 +32,7 @@ func TestRespondsWithLove(t *testing.T) {
 	pool, err := dockertest.NewPool("")
 	require.NoError(t, err, "could not connect to Docker")
 
-	resource, err := pool.Run("docker-gs-ping", "latest", []string{})
+	resource, err := pool.RunWithOptions(&dockertest.RunOptions{Repository: "docker-gs-ping", Tag: "latest", ExposedPorts: []string{"8080"}})
 	require.NoError(t, err, "could not start container")
 
 	t.Cleanup(func() {
@@ -68,7 +68,7 @@ func TestHealthCheck(t *testing.T) {
 	pool, err := dockertest.NewPool("")
 	require.NoError(t, err, "could not connect to Docker")
 
-	resource, err := pool.Run("docker-gs-ping", "latest", []string{})
+	resource, err := pool.RunWithOptions(&dockertest.RunOptions{Repository: "docker-gs-ping", Tag: "latest", ExposedPorts: []string{"8080"}}) //Run("docker-gs-ping", "latest", []string{})
 	require.NoError(t, err, "could not start container")
 
 	t.Cleanup(func() {
